@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نشر رسالة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>أرسل رسالة</h1>
+    <form action="/send" method="POST">
+        <input type="text" name="message" placeholder="اكتب رسالتك هنا" required>
+        <button type="submit">إرسال</button>
+    </form>
+    <h2>الرسائل:</h2>
+    <div id="messages"></div>
+    <script>
+        // تحميل الرسائل عند تحميل الصفحة
+        fetch('messages.json')
+            .then(response => response.json())
+            .then(data => {
+                const messagesDiv = document.getElementById('messages');
+                data.forEach(message => {
+                    const p = document.createElement('p');
+                    p.textContent = message;
+                    messagesDiv.appendChild(p);
+                });
+            })
+            .catch(error => console.error('Error loading messages:', error));
+    </script>
+</body>
+</html>
